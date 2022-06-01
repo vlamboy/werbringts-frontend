@@ -8,7 +8,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled mb-0">
             <li>
-              <a href="/" class="text-dark">Impressum</a>
+              <router-link class="text-dark" to="/impressum">Impressum</router-link>
             </li>
           </ul>
         </div>
@@ -18,7 +18,8 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled">
             <li>
-              <a href="/" class="text-dark">Datenschutzerklärung</a>
+              <router-link class="text-dark" to="/datenschutzerklaerung">Datenschutzerklärung
+              </router-link>
             </li>
           </ul>
         </div>
@@ -28,7 +29,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled mb-0">
             <li>
-              <a href="/" class="text-dark">FAQ</a>
+              <router-link class="text-dark" to="/faq">FAQ</router-link>
             </li>
           </ul>
         </div>
@@ -38,7 +39,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled">
             <li>
-              <a href="#" class="text-dark">Über uns</a>
+              <router-link class="text-dark" to="/about">Über uns</router-link>
             </li>
           </ul>
         </div>
@@ -53,12 +54,6 @@
       © 2022 Copyright
     </div>
     <!-- Copyright -->
-    <div class="footer-footer">
-      <router-link class="footer-link" to="/impressum">Impressum</router-link>
-      <router-link class="footer-link" to="/datenschutzerklärung">Datenschutzerklärung</router-link>
-      <router-link class="footer-link" to="/faq">FAQ</router-link>
-      <router-link class="footer-link" to="/about">Über uns</router-link>
-    </div>
   </footer>
 </template>
 
