@@ -1,16 +1,20 @@
 <template>
   <navbar></navbar>
   <router-view/>
+  <footer></footer>
 </template>
 
 <script>
+// eslint-disable-next-line import/extensions
+import Footer from './components/Footer';
 // eslint-disable-next-line import/extensions
 import Navbar from './components/Navbar';
 
 export default {
   name: 'App',
-  components: { Navbar },
+  components: { Navbar, Footer },
 };
+
 </script>
 
 <style>
