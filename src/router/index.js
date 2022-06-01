@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import AboutView from '../views/AboutView.vue';
+import AboutUsView from '../views/AboutUsView.vue';
+import ImpressumView from '../views/ImpressumView.vue';
+import DatenschutzView from '../views/DatenschutzView.vue';
+import FAQView from '../views/FAQView.vue';
 
 const routes = [
   {
@@ -9,9 +12,24 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/about',
-    name: 'about',
-    component: AboutView,
+    path: '/about-us',
+    name: 'aboutUs',
+    component: AboutUsView,
+  },
+  {
+    path: '/impressum',
+    name: 'impressum',
+    component: ImpressumView,
+  },
+  {
+    path: '/datenschutz',
+    name: 'datenschutz',
+    component: DatenschutzView,
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: FAQView,
   },
 ];
 

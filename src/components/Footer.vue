@@ -18,7 +18,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled">
             <li>
-              <router-link class="text-dark" to="/datenschutzerklaerung">Datenschutzerklärung
+              <router-link class="text-dark" to="/datenschutz">Datenschutzerklärung
               </router-link>
             </li>
           </ul>
@@ -39,7 +39,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul class="list-unstyled">
             <li>
-              <router-link class="text-dark" to="/about">Über uns</router-link>
+              <router-link class="text-dark" to="/about-us">About Us</router-link>
             </li>
           </ul>
         </div>
