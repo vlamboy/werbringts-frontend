@@ -13,7 +13,7 @@
         PLZ: 12345 <br>
     </p>
       <u> Kontaktaufnahme: </u>
-    <p> Telefon: +49 175 625431 <br>
+    <p> Telefon: +49 175 6254341 <br>
         E-Mail: <a href="mailto:purustech.mas@gmail.com"> purustech.mas@gmail.com </a>  <br>
     </p>
   </div>
