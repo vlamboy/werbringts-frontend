@@ -1,18 +1,19 @@
 <template>
   <navbar></navbar>
   <router-view/>
-  <footer></footer>
+  <Footer></Footer>
 </template>
 
 <script>
-// eslint-disable-next-line import/extensions
-import Footer from './components/Footer';
-// eslint-disable-next-line import/extensions
-import Navbar from './components/Navbar';
+import Footer from './components/Footer.vue';
+import Navbar from './components/Navbar.vue';
 
 export default {
   name: 'App',
-  components: { Navbar, Footer },
+  components: {
+    Navbar,
+    Footer,
+  },
 };
 
 </script>
@@ -37,5 +38,12 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 </style>

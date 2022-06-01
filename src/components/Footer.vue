@@ -6,20 +6,9 @@
       <div class="row">
         <!--Grid column-->
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase">Links</h5>
-
           <ul class="list-unstyled mb-0">
             <li>
-              <a href="/" class="text-dark">Link 1</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 2</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 3</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 4</a>
+              <a href="/" class="text-dark">Impressum</a>
             </li>
           </ul>
         </div>
@@ -27,20 +16,9 @@
 
         <!--Grid column-->
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase mb-0">Links</h5>
-
           <ul class="list-unstyled">
             <li>
-              <a href="/" class="text-dark">Link 1</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 2</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 3</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 4</a>
+              <a href="/" class="text-dark">Datenschutzerklärung</a>
             </li>
           </ul>
         </div>
@@ -48,20 +26,9 @@
 
         <!--Grid column-->
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase">Links</h5>
-
           <ul class="list-unstyled mb-0">
             <li>
-              <a href="/" class="text-dark">Link 1</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 2</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 3</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 4</a>
+              <a href="/" class="text-dark">FAQ</a>
             </li>
           </ul>
         </div>
@@ -69,20 +36,9 @@
 
         <!--Grid column-->
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase mb-0">Links</h5>
-
           <ul class="list-unstyled">
             <li>
-              <a href="/" class="text-dark">Link 1</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 2</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 3</a>
-            </li>
-            <li>
-              <a href="/" class="text-dark">Link 4</a>
+              <a href="#" class="text-dark">Über uns</a>
             </li>
           </ul>
         </div>
@@ -94,10 +50,15 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2020 Copyright:
-      <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      © 2022 Copyright
     </div>
     <!-- Copyright -->
+    <div class="footer-footer">
+      <router-link class="footer-link" to="/impressum">Impressum</router-link>
+      <router-link class="footer-link" to="/datenschutzerklärung">Datenschutzerklärung</router-link>
+      <router-link class="footer-link" to="/faq">FAQ</router-link>
+      <router-link class="footer-link" to="/about">Über uns</router-link>
+    </div>
   </footer>
 </template>
 
