@@ -1,5 +1,8 @@
 # werbringts-frontend
 
+[![CI](https://github.com/vlamboy/werbringts-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/vlamboy/werbringts-frontend/actions/workflows/ci.yml)
+
+
 ## Project setup
 ```
 npm install
@@ -27,3 +30,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
