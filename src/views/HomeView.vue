@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <img alt="Werbringts logo" src="../assets/logo_v2.png">
-    <HelloWorld msg="Hello World!"/>
+  </div>
+  <div class="form-outline">
+    <InputForm text=""/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import InputForm from '@/components/InputForm.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld,
+    InputForm,
   },
 };
 </script>

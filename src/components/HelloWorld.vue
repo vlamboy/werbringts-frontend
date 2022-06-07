@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <a href="/new-bringlist" class="btn btn-primary"
-       role="button">Erstelle deine Werbringts-Liste</a>
+       role="button">old</a>
   </div>
 </template>
 
