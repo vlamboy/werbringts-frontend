@@ -1,0 +1,16 @@
+<template>
+  <div class="form-outline">
+    <input type="text" id="form12" class="form-control" />
+    <label class="form-label" for="form12">Example label</label>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'InputForm',
+};
+</script>
+
+<style scoped>
+
+</style>

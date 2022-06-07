@@ -4,6 +4,7 @@ import AboutUsView from '../views/AboutUsView.vue';
 import ImpressumView from '../views/ImpressumView.vue';
 import DatenschutzView from '../views/DatenschutzView.vue';
 import FAQView from '../views/FAQView.vue';
+import NewBringlistView from '../views/NewBringlistView.vue';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/faq',
     name: 'faq',
     component: FAQView,
+  },
+  {
+    path: '/new-bringlist',
+    name: 'newBringlist',
+    component: NewBringlistView,
   },
 ];
 

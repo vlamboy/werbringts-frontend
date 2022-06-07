@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <button type="button" class="btn btn-primary">Primary</button>
+    <a href="/new-bringlist" class="btn btn-primary"
+       role="button">Erstelle deine Werbringts-Liste</a>
   </div>
 </template>
 
@@ -16,4 +16,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.a {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
+}
+
 </style>
