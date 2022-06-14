@@ -22,7 +22,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-          <button class="btn btn-primary" type="submit" @click="createPerson">Speichern</button>
+          <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
+                  @click="createPerson">Speichern</button>
         </div>
       </div>
     </div>
