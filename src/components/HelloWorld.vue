@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <a href="/new-bringlist" class="btn btn-primary"
-       role="button">old</a>
+       role="button">new message</a>
   </div>
 </template>
 
