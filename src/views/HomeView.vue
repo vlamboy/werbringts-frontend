@@ -2,9 +2,8 @@
   <div class="home">
     <img alt="Werbringts logo" src="../assets/logo_v2.png">
   </div>
-  <div class="form-outline">
-    <InputForm text=""/>
-  </div>
+
+  <input-form></input-form>
 </template>
 
 <script>

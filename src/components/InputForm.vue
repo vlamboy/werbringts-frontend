@@ -11,14 +11,13 @@
 
       <label for="list-description" class="form-label">Wofür soll etwas mitgebracht werden?
         Gib den anderen Mitbringer:innen ein paar Infos.
-        <textarea class="form-control" id="list-description" v-model="listDescription" rows="3">
-        </textarea>
+        <input class="form-control" id="list-description" v-model="listDescription" rows="3"/>
       </label>
 
       <br>
 
-      <a href="/new-bringlist" button type="submit" class="btn btn-outline-dark"
-        @click.prevent="createBringlist">Liste erstellen</a>
+      <a href="/new-bringlist" button class="btn btn-outline-dark" type="submit"
+        @click="createBringlist">Liste erstellen</a>
       </form>
   </div>
 
@@ -43,6 +42,7 @@ export default {
   methods: {
     createBringlist() {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/bringlists`;
+      console.log(endpoint);
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
 
