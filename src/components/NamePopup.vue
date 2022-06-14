@@ -17,12 +17,12 @@
         </div>
         <div class="modal-body">
           <label for="list-name" class="form-label">
-            <input type="text" class="form-control" id="list-name" v-model="firstname" />
+            <input type="text" class="form-control" id="list-name" v-model="personName" />
           </label>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-          <button type="button" class="btn btn-primary">Speichern</button>
+          <button class="btn btn-primary" type="submit" @click="createPerson">Speichern</button>
         </div>
       </div>
     </div>
@@ -32,6 +32,33 @@
 <script>
 export default {
   name: 'NamePopup',
+  data() {
+    return {
+      personName: '',
+    };
+  },
+  methods: {
+    createPerson() {
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/persons`;
+      console.log(endpoint);
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+
+      const payload = JSON.stringify({
+        personName: this.personName,
+      });
+
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: payload,
+        redirect: 'follow',
+      };
+
+      fetch(endpoint, requestOptions)
+        .catch((error) => console.log('error', error));
+    },
+  },
 };
 </script>
 
