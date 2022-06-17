@@ -23,7 +23,9 @@
             <td>{{products.closed}}</td>
             <td>
               <button type="button" class="btn btn-success">Mitbringen</button>
-              <button type="button" class="btn btn-danger">Löschen</button>
+              <button type="button" class="btn btn-danger"
+                      @click = "deleteProduct(products)">
+                Löschen</button>
             </td>
           </tr>
           </tbody>
@@ -47,6 +49,17 @@ export default {
         return true;
       }
       return false;
+    },
+
+    deleteProduct(products) {
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;
+      const requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow',
+      };
+
+      fetch(`${endpoint}/${products.productId}`, requestOptions)
+        .catch((error) => console.log('error', error));
     },
   },
   mounted() {
