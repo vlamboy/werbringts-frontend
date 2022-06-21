@@ -73,31 +73,17 @@ export default {
     currentUrl() {
       return window.location.href;
     },
-
     async copyURL() {
       try {
-        // eslint-disable-next-line no-restricted-globals
-        await navigator.clipboard.writeText(document.getElementById('myInput').value);
+        const copyText = document.getElementById('myInput');
+        await navigator.clipboard.writeText(copyText.value);
+        alert(`Copied the text: ${copyText.value}`);
         console.log('Page URL copied to clipboard');
       } catch (err) {
         console.error('Failed to copy: ', err);
       }
     },
 
-    // asynch function copyURL(){
-    // /* Get the text field */
-    // const copyText = document.getElementById('myInput');
-    //
-    // /* Select the text field */
-    // copyText.select();
-    // copyText.setSelectionRange(0, 1000); /* For mobile devices */
-    //
-    // /* Copy the text inside the text field */
-    // navigator.clipboard.writeText(copyText.value);
-
-    /* Alert the copied text */
-    // alert(`Copied the text: ${copyText.value}`);
-    // },
     deleteBringlist(bringlists) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/bringlists`;
       const requestOptions = {

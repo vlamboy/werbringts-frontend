@@ -17,7 +17,7 @@
           <tr class v-for="(products, index) in products" :key="products.productId">
             <th scope="row">{{ index + 1 }}</th>
             <td>{{products.productName}}</td>
-            <td>{{products.quatity}}</td>
+            <td>{{products.quantity}}</td>
             <td>
             </td>
             <td>{{products.closed}}</td>
@@ -41,7 +41,7 @@
                   <div class="modal-body">
                     <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
                       <input type="range" class="form-range" min="1"
-                             max= "100" step="1" id="rangeQuantityBrought"
+                             max= "{{products.getQuantity()}}" step="1" id="rangeQuantityBrought"
                              @change="updateQuantityBrought()"
                              v-model="quantityBrought">
                       <input type="text" id="inputquantitybrought"  >
@@ -83,6 +83,7 @@ export default {
   methods: {
     getQuantity() {
       const itemQuantity = document.getElementById('customRange3').value;
+      // const itemQuantity = products.quantity;
       document.getElementById('rangeQuantityBrought').max = itemQuantity;
     },
     updateQuantityBrought() {
