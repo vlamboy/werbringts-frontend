@@ -103,7 +103,7 @@ export default {
 <style scoped>
 /* Style buttons */
 .btn {
-  background-color: #a0d086; /* Blue background */
+  background-color: #4a62b9;; /* Blue background */
   color: white; /* White text */
   padding: 8px 108px; /* Some padding */
   font-size: 16px; /* Set a font size */
@@ -113,14 +113,14 @@ export default {
 
 /* Darker background on mouse-over */
 .btn:hover {
-  background-color: #377909;
+  background-color: #344582;
 }
 .button{
-  background-color: #706b6f; /* Blue background */
+  background-color: #5B9A9E; /* Blue background */
   color: white; /* White text */
   padding: 8px 30px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
+  font-size: 16px;
+  cursor: pointer;
   border-color: white ;
   ;
 }

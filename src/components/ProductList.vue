@@ -24,9 +24,8 @@
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal">Mitbringen</button>
-              <button type="button" class="btn btn-danger"
-                      @click = "deleteProduct(products)">
-                Löschen</button>
+              <button1 type="button" class="btn btn-danger"
+                      @click = "deleteProduct(products)">✘</button1>
             </td>
             <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,6 +138,28 @@ export default {
 </script>
 
 <style scoped>
+button {
+  background-color:#156e75;
+  color: #ffffff;
+  border: none;
+  margin-right: 8px; /* Some padding */
+}
+button1 {
+  background-color:white;
+  border: 2px solid #156e75;
+  color: #156e75;
+}
+
+button:hover {
+  background-color: #156e75;
+}
+
+button1:hover {
+  background-color: #ed1e37;
+  border: 2px solid #ed1e37;
+  color: white;
+}
+
 .container {
   padding: 2rem 0rem;
 }

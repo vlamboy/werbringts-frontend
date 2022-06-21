@@ -2,7 +2,7 @@
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary" data-bs-toggle="modal"
           data-bs-target="#exampleModal">
-    Sag deinen Gästen wer Du bist!
+    Sag Deinen Gästen wer Du bist!
   </button>
 
   <!-- Modal -->
@@ -65,7 +65,14 @@ export default {
 
 <style scoped>
 button {
-  background-color:#4a62b9;
+  background-color:white;
+  border: 1px solid #212529;
+  color: #212529;
 }
 
+button:hover {
+  background-color: #212529;
+  border: 1px solid #212529;
+  color: white;
+}
 </style>
