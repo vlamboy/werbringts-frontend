@@ -60,6 +60,7 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
+        .then
         .catch((error) => console.log('error', error));
     },
   },

@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
+        {{ $route.params.bringlistId }}
         <table class="table table-bordered">
           <thead>
           <tr>
@@ -41,7 +42,7 @@
                   <div class="modal-body">
                     <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
                       <input type="range" class="form-range" min="1"
-                             max= "{{products.getQuantity()}}" step="1" id="rangeQuantityBrought"
+                             :max="products.quantity" step="1" id="rangeQuantityBrought"
                              @change="updateQuantityBrought()"
                              v-model="quantityBrought">
                       <input type="text" id="inputquantitybrought"  >
@@ -98,6 +99,7 @@ export default {
       };
       fetch(`${endpoint}/${products.productId}`, requestOptions)
         .catch((error) => console.log('error', error));
+      // Produkt aus dem array löschen by id
     },
     createItemsbrought(products) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought`;

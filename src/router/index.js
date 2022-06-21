@@ -32,8 +32,13 @@ const routes = [
     name: 'faq',
     component: FAQView,
   },
+  // {
+  //   path: '/new-bringlist',
+  //   name: 'newBringlist',
+  //   component: NewBringlistView,
+  // },
   {
-    path: '/new-bringlist',
+    path: '/new-bringlist/:bringlistId',
     name: 'newBringlist',
     component: NewBringlistView,
   },
