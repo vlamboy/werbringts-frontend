@@ -24,8 +24,8 @@
           <br>
           <label for="customRange3" class="form-label">Wie oft soll das Produkt mitgebracht werden?
           <input type="range" class="form-range" min="1" max="50" step="1" id="customRange3"
-                 @change="updateTextInput()" v-model="quantity">
-            <input type="text" id="textInput"  >
+                 @change="updateTextInput()"  v-model="quantity">
+            <input type="text" id="textInput" >
           </label>
         </div>
         <div class="modal-footer">
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       productName: '',
-      quantity: null,
+      quantity: 1,
       renderComponent: true,
     };
   },
@@ -72,7 +72,7 @@ export default {
         productName: this.productName,
         quantity: this.quantity,
         closed: false,
-        bringlistId: 12,
+        bringlistId: this.$route.params.bringlistId,
         itemsBrought: null,
       });
 

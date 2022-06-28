@@ -20,15 +20,14 @@
             <th scope="row">{{ index + 1 }}</th>
             <td>{{product.productName}}</td>
             <td>{{product.quantity}}</td>
-            <td>
-            </td>
+            <td id="mitbringen"></td>
             <td>{{product.closed}}</td>
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal">Mitbringen</button>
               <button1 type="button" class="btn btn-danger"
                       @click = "deleteProduct(product);
-                      removeProductFromArray(products, index)">✘</button1>
+                      updateListAfterDelete(products, index)">✘</button1>
             </td>
             <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,7 +53,9 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Schließen</button>
                     <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                            @click="createItemsbrought(persons, products)">Speichern</button>
+                            @click="createItemsbrought(product);
+                            updateProductwithItemsBrought(product.productId, itemsBrought)">
+                            Speichern</button>
                   </div>
                 </div>
               </div>
@@ -80,6 +81,7 @@ export default {
   data() {
     return {
       products: [],
+      itemsBroughtPerProduct: [],
       quantityBrought: null,
     };
   },
@@ -93,19 +95,22 @@ export default {
       const rangeItemsBrought = document.getElementById('rangeQuantityBrought').value;
       document.getElementById('inputquantitybrought').value = rangeItemsBrought;
     },
-    removeProductFromArray(products, index) {
-      // const index = products.indexOf(product);
-      if (index > 0) {
+    updateListAfterDelete(products, index) {
+      if (index > -1) {
         products.splice(index, 1);
       }
     },
+    // updateProductwithItemsBrought(productId, itemsBrought) {
+    //   itemsBroughtPerProduct.quantityBrought.reduce((accumulator, currentValue) => {
+    //      return accumulator + currentValue;
+    //    });
+    // },
     deleteProduct(product) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;
       const requestOptions = {
         method: 'DELETE',
         redirect: 'follow',
       };
-
       fetch(`${endpoint}/${product.productId}`, requestOptions)
         .catch((error) => console.log('error', error));
       // Produkt aus dem array löschen by id
@@ -132,9 +137,22 @@ export default {
       fetch(endpoint, requestOptions)
         .catch((error) => console.log('error', error));
     },
+    getItemsBroughtForProduct(productid) {
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought?productId=${productid}`;
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+      fetch(endpoint, requestOptions)
+        .then((response) => response.json())
+        .then((result) => result.forEach((itemsBrought) => {
+          this.itemsBrought.push(itemsBrought);
+        }))
+        .catch((error) => console.log('error', error));
+    },
   },
   mounted() {
-    const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;
+    const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
     const requestOptions = {
       method: 'GET',
       redirect: 'follow',

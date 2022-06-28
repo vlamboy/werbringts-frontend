@@ -17,7 +17,8 @@
       <br>
 
       <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"
-         @click="createBringlist">Liste erstellen</a>
+        @click="createBringlist, insertUrl(bringlistId)"
+         id="weiterleiten">Liste erstellen</a>
       </form>
   </div>
 
@@ -37,9 +38,14 @@ export default {
     return {
       listName: '',
       listDescription: '',
+      bringlistId: null,
     };
   },
   methods: {
+    insertUrl(bringlistId) {
+      const id = String(bringlistId);
+      document.getElementById('weiterleiten').href = `/new-bringlist/${id}`;
+    },
     createBringlist() {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/bringlists`;
       console.log(endpoint);
@@ -60,10 +66,13 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
+        // .then((response) => response.json())
+        // .then((data) => { this.bringlistId = data.data[0].bringlistId; })
         .then((data) => {
           console.log('Success:', data);
         })
         .catch((error) => console.log('error asd', error));
+      // .catch((error) => console.log('error', error));
     },
   },
 };
