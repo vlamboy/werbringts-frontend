@@ -16,8 +16,8 @@
 
       <br>
 
-      <a href="/new-bringlist" button class="btn btn-outline-dark" type="submit"
-        @click="createBringlist">Liste erstellen</a>
+      <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"
+         @click="createBringlist">Liste erstellen</a>
       </form>
   </div>
 
@@ -60,8 +60,10 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
-        .then
-        .catch((error) => console.log('error', error));
+        .then((data) => {
+          console.log('Success:', data);
+        })
+        .catch((error) => console.log('error asd', error));
     },
   },
 };

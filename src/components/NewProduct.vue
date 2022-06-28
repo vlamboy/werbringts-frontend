@@ -6,6 +6,7 @@
   </button>
 -->
   <!-- Modal -->
+  <my-component v-if="renderComponent" />
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel"
        aria-hidden="true">
     <div class="modal-dialog">
@@ -30,7 +31,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
           <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                  @click="createProduct">Speichern</button>
+                  @click="createProduct; forceRerender">Speichern</button>
         </div>
       </div>
     </div>
@@ -44,9 +45,19 @@ export default {
     return {
       productName: '',
       quantity: null,
+      renderComponent: true,
     };
   },
   methods: {
+    forceRerender() {
+      // Remove my-component from the DOM
+      this.renderComponent = false;
+
+      this.$nextTick(() => {
+        // Add the component back in
+        this.renderComponent = true;
+      });
+    },
     updateTextInput() {
       const range = document.getElementById('customRange3').value;
       document.getElementById('textInput').value = range;
