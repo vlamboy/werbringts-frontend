@@ -57,7 +57,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <button onclick="location.href='/'" @click="deleteBringlist(16)"
+          <button onclick="location.href='/'"
+                  @click="deleteBringlist(this.$route.params.bringlistId)"
                   class="button">Ja</button>
           <button type="button" class="button" data-bs-dismiss="modal">Nein</button>
         </div>

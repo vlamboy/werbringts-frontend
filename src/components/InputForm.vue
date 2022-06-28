@@ -1,5 +1,4 @@
 <template>
-
   <div class="mb-3">
     <form class = "dd">
       <label for="list-name" class="form-label">Erstelle deine Werbringts-Liste
@@ -17,7 +16,8 @@
       <br>
 
       <a href="/new-bringlist" button class="btn btn-outline-dark" type="submit"
-        @click="createBringlist">Liste erstellen</a>
+        @click="createBringlist, insertUrl(bringlistId)"
+         id="weiterleiten">Liste erstellen</a>
       </form>
   </div>
 
@@ -37,9 +37,14 @@ export default {
     return {
       listName: '',
       listDescription: '',
+      bringlistId: null,
     };
   },
   methods: {
+    insertUrl(bringlistId) {
+      const id = String(bringlistId);
+      document.getElementById('weiterleiten').href = `/new-bringlist/${id}`;
+    },
     createBringlist() {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/bringlists`;
       console.log(endpoint);
@@ -60,7 +65,8 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
-        .then
+        .then((response) => response.json())
+        .then((data) => { this.bringlistId = data.data[0].bringlistId; })
         .catch((error) => console.log('error', error));
     },
   },

@@ -40,6 +40,7 @@ const routes = [
   {
     path: '/new-bringlist/:bringlistId',
     name: 'newBringlist',
+    props: true,
     component: NewBringlistView,
   },
 ];
