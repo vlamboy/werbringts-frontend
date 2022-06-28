@@ -43,9 +43,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [x] ItemsBrought abhängig von der Product Quantity
 * [x] Refactor quatity
 
+
 ### Funktionale TODOs 
 * [ ] UPDATE Button bei ItemsBrought  
 * [ ] UPDATE bei Product (closed auf true setzen)
+* [ ] ItemsBrought in Spalte anzeigen (Namen)
+* [ ] Tests schreiben
 
 ### Non Prio Funktionale TODOS
 

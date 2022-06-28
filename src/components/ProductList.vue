@@ -1,9 +1,14 @@
 <template>
-  <my-component v-if="renderComponent" />
+  <!-- <ProductList :key="componentKey" /> -->
+  <!--<my-component v-if="renderComponent" />-->
   <div class="container">
     <div class="row">
       <div class="col-12">
         {{ $route.params.bringlistId }}
+        <button class="btn btn-primary"
+                @click="forceRerender">TEST
+        </button>
+        <!-- <product-list :key="componentKey"/>-->
         <table class="table table-bordered">
           <thead>
           <tr>
@@ -25,9 +30,9 @@
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal">Mitbringen</button>
-              <button1 type="button" class="btn btn-danger"
+              <button type="button" class="btn btn-danger"
                       @click = "deleteProduct(product);
-                      updateListAfterDelete(products, index)">✘</button1>
+                      updateListAfterDelete(products, index)">✘</button>
             </td>
             <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -80,10 +85,16 @@ export default {
   name: 'ProductList',
   data() {
     return {
-      products: [],
       itemsBroughtPerProduct: [],
       quantityBrought: null,
+      componentKey: 0,
     };
+  },
+  props: {
+    products: {
+      type: Array,
+      required: true,
+    },
   },
   methods: {
     getQuantity() {
@@ -99,6 +110,21 @@ export default {
       if (index > -1) {
         products.splice(index, 1);
       }
+    },
+    updateProduct(product, itemsBrought) {
+      // hol die Quntities aller Mitbringenden
+      let qbTotal = null;
+      for(var i=0, n=itemsBrought.length; i < n; i++)
+        qbTotal += itemsBrought.quantityBrought;
+      // bilde eine Summe aller Quantities
+
+      // wenn größer oder gleich mitgebracht wird
+      if (product.quantity === qbTotal){
+        product.isClosed
+
+      }
+          // setz "wird mitgebracht auf true"
+          // mitbringen Button deaktivieren
     },
     // updateProductwithItemsBrought(productId, itemsBrought) {
     //   itemsBroughtPerProduct.quantityBrought.reduce((accumulator, currentValue) => {
@@ -152,17 +178,18 @@ export default {
     },
   },
   mounted() {
-    const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    fetch(endpoint, requestOptions)
-      .then((response) => response.json())
-      .then((result) => result.forEach((products) => {
-        this.products.push(products);
-      }))
-      .catch((error) => console.log('error', error));
+    // eslint-disable-next-line max-len
+    // const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
+    // const requestOptions = {
+    //   method: 'GET',
+    //   redirect: 'follow',
+    // };
+    // fetch(endpoint, requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => result.forEach((products) => {
+    //     this.products.push(products);
+    //   }))
+    //   .catch((error) => console.log('error', error));
   },
 };
 </script>

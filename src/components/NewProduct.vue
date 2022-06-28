@@ -1,12 +1,11 @@
 <template>
-  <!-- Button trigger modal -->
+   <!-- Button trigger modal -->
  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
           data-bs-target="#productModal">
     Füge ein neues Produkt hinzu
   </button>
 -->
   <!-- Modal -->
-  <my-component v-if="renderComponent" />
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel"
        aria-hidden="true">
     <div class="modal-dialog">
@@ -29,9 +28,12 @@
           </label>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-          <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                  @click="createProduct; forceRerender">Speichern</button>
+          <button type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">Schließen
+          </button>
+          <button class="btn btn-primary" type="submit"
+                  data-bs-dismiss="modal" @click="createProduct">Speichern
+          </button>
         </div>
       </div>
     </div>
@@ -45,18 +47,16 @@ export default {
     return {
       productName: '',
       quantity: 1,
-      renderComponent: true,
+      times: 0,
+      product_reload: 0,
+      // key: 'componentKey',
     };
   },
+  emits: ['created'],
   methods: {
-    forceRerender() {
-      // Remove my-component from the DOM
-      this.renderComponent = false;
-
-      this.$nextTick(() => {
-        // Add the component back in
-        this.renderComponent = true;
-      });
+    reload() {
+      this.product_reload += 1;
+      this.times += 1;
     },
     updateTextInput() {
       const range = document.getElementById('customRange3').value;
@@ -85,8 +85,11 @@ export default {
 
       fetch(endpoint, requestOptions)
         .catch((error) => console.log('error', error));
+
+      this.$emit('created');
     },
   },
+  // props: ['settings'],
 };
 
 </script>

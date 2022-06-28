@@ -1,7 +1,6 @@
 <template>
 
   <div class="mb-3">
-    <form class = "dd">
       <label for="list-name" class="form-label">Erstelle deine Werbringts-Liste
           <input type="text" class="form-control" id="list-name" v-model="listName" placeholder=
             "Name der Liste" />
@@ -16,10 +15,10 @@
 
       <br>
 
-      <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"
-        @click="createBringlist, insertUrl(bringlistId)"
-         id="weiterleiten">Liste erstellen</a>
-      </form>
+      <button @click="createBringlist" class="btn btn-outline-dark">List erstellen</button>
+<!--      <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"-->
+<!--        @click="createBringlist, insertUrl(bringlistId)"-->
+<!--         id="weiterleiten">Liste erstellen</a>-->
   </div>
 
   <br>
@@ -65,14 +64,19 @@ export default {
         redirect: 'follow',
       };
 
+      console.log(`POST on ${endpoint}`);
       fetch(endpoint, requestOptions)
-        // .then((response) => response.json())
+        .then((response) => response.json())
+        // .then((data) => console.log(data))
+        .then((data) => console.log(data))
         // .then((data) => { this.bringlistId = data.data[0].bringlistId; })
-        .then((data) => {
-          console.log('Success:', data);
-        })
+        .then((data) => console.log(data))
+        // .then((data) => {
+        //   console.log('Success:', data);
+        // })
         .catch((error) => console.log('error asd', error));
       // .catch((error) => console.log('error', error));
+      this.$router.push(`/new-bringlist/${this.bringlistId}`);
     },
   },
 };

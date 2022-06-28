@@ -12,8 +12,8 @@
     <name-popup></name-popup>
     <br>
     <br>
-    <new-product></new-product>
-    <product-list></product-list>
+    <new-product @created="loadProducts"></new-product>
+    <product-list :products="this.products"></product-list>
   </div>
 </template>
 
@@ -33,6 +33,30 @@ export default {
     NamePopup,
     ButtonBar,
     ProductList,
+  },
+  data() {
+    return {
+      products: [],
+    };
+  },
+  methods: {
+    loadProducts() {
+      // eslint-disable-next-line max-len
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+      fetch(endpoint, requestOptions)
+        .then((response) => response.json())
+        .then((result) => result.forEach((products) => {
+          this.products.push(products);
+        }))
+        .catch((error) => console.log('error', error));
+    },
+  },
+  mounted() {
+    this.loadProducts();
   },
 };
 </script>
