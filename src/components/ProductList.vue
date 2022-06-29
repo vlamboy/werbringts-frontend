@@ -17,29 +17,29 @@
           </tr>
           </thead>
           <tbody>
-          <tr class v-for="(product, index) in products" :key="product.productId">
+          <tr class v-for="(product, index) in fullBringList.productsBroughtList"
+              :key="product.productId">
             <th scope="row">{{ index + 1 }}</th>
             <td>{{product.productName}}</td>
-            <td>{{product.quantity}}</td>
+            <td>{{product.needed}}</td>
             <td>
               <ul>
-                <li v-for="itemsBrought in product.itemsBroughtId" :key="itemsBrought">
-                  {{ itemsBrought }}
+                <li v-for="person in product.bringersList" :key="person">
+                  {{ person.personName}} bringt {{ person.amount}} mit.
                 </li>
               </ul>
             </td>
-            <!--<td id="mitbringen"></td>-->
-            <td>{{ updateProduct() }}</td>
+            <td>{{ updateProduct(product.bringersList) }}</td>
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal">Mitbringen</button>
               <button type="button" class="btn btn-danger"
-                      @click = "deleteProduct(product);
-                      updateListAfterDelete(products, index)">✘</button>
+                      @click = "deleteProduct(fullBringList.productsBroughtList, product, index);"
+              >✘</button>
             </td>
-            <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
+              <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
+                <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
@@ -51,7 +51,7 @@
                   <div class="modal-body">
                     <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
                       <input type="range" class="form-range" min="1"
-                             :max="product.quantity" step="1" id="rangeQuantityBrought"
+                             :max="product.needed" step="1" id="rangeQuantityBrought"
                              @change="updateQuantityBrought()"
                              v-model="quantityBrought">
                       <input type="text" id="inputquantitybrought"  >
@@ -61,7 +61,7 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Schließen</button>
                     <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                            @click="createItemsbrought(product);">
+                            @click="createItemsbrought(product.productId);">
                             Speichern</button>
                   </div>
                 </div>
@@ -89,12 +89,12 @@ export default {
     return {
       itemsBroughtPerProduct: [],
       quantityBrought: null,
-      componentKey: 0,
+      productsBrought: '',
     };
   },
   props: {
-    products: {
-      type: Array,
+    fullBringList: {
+      type: Object,
       required: true,
     },
   },
@@ -131,7 +131,7 @@ export default {
     //      return accumulator + currentValue;
     //    });
     // },
-    deleteProduct(product) {
+    deleteProduct(array, product, index) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;
       const requestOptions = {
         method: 'DELETE',
@@ -139,9 +139,13 @@ export default {
       };
       fetch(`${endpoint}/${product.productId}`, requestOptions)
         .catch((error) => console.log('error', error));
+
+      if (index > -1) {
+        array.splice(index, 1);
+      }
       // Produkt aus dem array löschen by id
     },
-    createItemsbrought(products) {
+    createItemsbrought(id) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought`;
       console.log(endpoint);
       const myHeaders = new Headers();
@@ -149,7 +153,7 @@ export default {
 
       const payload = JSON.stringify({
         personId: 4,
-        productId: products.productId,
+        productId: id,
         quantityBrought: this.quantityBrought,
       });
 

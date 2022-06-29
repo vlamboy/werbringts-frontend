@@ -3,7 +3,8 @@
     <br>
     <h1>Deine neue Werbringts-Liste</h1>
     <br>
-    <view-description></view-description>
+    <h4>Infos und Beschreibung</h4>
+    <h5>{{fullBringList.listDescription}}</h5>
     <br>
     <br>
     <button-bar></button-bar>
@@ -13,7 +14,7 @@
     <br>
     <br>
     <new-product @created="loadProducts"></new-product>
-    <product-list :products="this.products"></product-list>
+    <product-list :fullBringList="this.fullBringList"></product-list>
   </div>
 </template>
 
@@ -23,12 +24,10 @@ import NamePopup from '@/components/NamePopup.vue';
 import ButtonBar from '@/components/ButtonBar.vue';
 import ProductList from '@/components/ProductList.vue';
 import NewProduct from '@/components/NewProduct.vue';
-import ViewDescription from '@/components/ViewDescription.vue';
 
 export default {
   name: 'NewBringlistView',
   components: {
-    ViewDescription,
     NewProduct,
     NamePopup,
     ButtonBar,
@@ -36,23 +35,24 @@ export default {
   },
   data() {
     return {
-      products: [],
+      fullBringList: '',
     };
   },
   methods: {
     loadProducts() {
       // eslint-disable-next-line max-len
-      this.products = [];
-      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
+      this.fullBringList = null;
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/fullbringlist?id=${this.$route.params.bringlistId}`;
       const requestOptions = {
         method: 'GET',
         redirect: 'follow',
       };
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
-        .then((result) => result.forEach((products) => {
-          this.products.push(products);
-        }))
+        .then((result) => {
+          console.log(result);
+          this.fullBringList = result;
+        })
         .catch((error) => console.log('error', error));
     },
   },
