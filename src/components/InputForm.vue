@@ -67,16 +67,13 @@ export default {
       console.log(`POST on ${endpoint}`);
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
-        // .then((data) => console.log(data))
-        .then((data) => console.log(data))
-        // .then((data) => { this.bringlistId = data.data[0].bringlistId; })
-        .then((data) => console.log(data))
-        // .then((data) => {
-        //   console.log('Success:', data);
-        // })
+        .then((result) => {
+          console.log(result);
+          const { bringlistId } = result;
+          this.$router.push(`/new-bringlist/${bringlistId}`);
+        })
         .catch((error) => console.log('error asd', error));
       // .catch((error) => console.log('error', error));
-      this.$router.push(`/new-bringlist/${this.bringlistId}`);
     },
   },
 };

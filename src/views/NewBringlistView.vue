@@ -42,6 +42,7 @@ export default {
   methods: {
     loadProducts() {
       // eslint-disable-next-line max-len
+      this.products = [];
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
       const requestOptions = {
         method: 'GET',

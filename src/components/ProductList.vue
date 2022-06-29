@@ -4,10 +4,6 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        {{ $route.params.bringlistId }}
-        <button class="btn btn-primary"
-                @click="forceRerender">TEST
-        </button>
         <!-- <product-list :key="componentKey"/>-->
         <table class="table table-bordered">
           <thead>
@@ -25,8 +21,15 @@
             <th scope="row">{{ index + 1 }}</th>
             <td>{{product.productName}}</td>
             <td>{{product.quantity}}</td>
-            <td id="mitbringen"></td>
-            <td>{{product.closed}}</td>
+            <td>
+              <ul>
+                <li v-for="itemsBrought in product.itemsBroughtId" :key="itemsBrought">
+                  {{ itemsBrought }}
+                </li>
+              </ul>
+            </td>
+            <!--<td id="mitbringen"></td>-->
+            <td>{{ updateProduct() }}</td>
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal">Mitbringen</button>
@@ -58,8 +61,7 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Schließen</button>
                     <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                            @click="createItemsbrought(product);
-                            updateProductwithItemsBrought(product.productId, itemsBrought)">
+                            @click="createItemsbrought(product);">
                             Speichern</button>
                   </div>
                 </div>
@@ -111,20 +113,18 @@ export default {
         products.splice(index, 1);
       }
     },
-    updateProduct(product, itemsBrought) {
-      // hol die Quntities aller Mitbringenden
-      let qbTotal = null;
-      for(var i=0, n=itemsBrought.length; i < n; i++)
-        qbTotal += itemsBrought.quantityBrought;
-      // bilde eine Summe aller Quantities
-
-      // wenn größer oder gleich mitgebracht wird
-      if (product.quantity === qbTotal){
-        product.isClosed
-
-      }
-          // setz "wird mitgebracht auf true"
-          // mitbringen Button deaktivieren
+    updateProduct() {
+      return 'Hello';
+      // let qbTotal = null;
+      // // itemsBrought.forEach(item => qbTotal += item.itemsBrought);
+      // for (let i = 0; i < itemsBrought.length; i += 1) {
+      //   qbTotal += itemsBrought.quantityBrought;
+      // }
+      // if (product.quantity <= qbTotal) {
+      //   return 'Wird noch gebraucht';
+      // } return 'Wird mitgebracht';
+      // // setz "wird mitgebracht auf true"
+      // // mitbringen Button deaktivieren
     },
     // updateProductwithItemsBrought(productId, itemsBrought) {
     //   itemsBroughtPerProduct.quantityBrought.reduce((accumulator, currentValue) => {
@@ -141,14 +141,14 @@ export default {
         .catch((error) => console.log('error', error));
       // Produkt aus dem array löschen by id
     },
-    createItemsbrought(persons, products) {
+    createItemsbrought(products) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought`;
       console.log(endpoint);
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
 
       const payload = JSON.stringify({
-        personId: persons.personId,
+        personId: 4,
         productId: products.productId,
         quantityBrought: this.quantityBrought,
       });
@@ -178,18 +178,6 @@ export default {
     },
   },
   mounted() {
-    // eslint-disable-next-line max-len
-    // const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products?bringListId=${this.$route.params.bringlistId}`;
-    // const requestOptions = {
-    //   method: 'GET',
-    //   redirect: 'follow',
-    // };
-    // fetch(endpoint, requestOptions)
-    //   .then((response) => response.json())
-    //   .then((result) => result.forEach((products) => {
-    //     this.products.push(products);
-    //   }))
-    //   .catch((error) => console.log('error', error));
   },
 };
 </script>
