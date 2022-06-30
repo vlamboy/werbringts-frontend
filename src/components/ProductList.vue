@@ -13,6 +13,7 @@
             <th scope="col">Anzahl</th>
             <th scope="col">Mitbringende</th>
             <th scope="col">Wird Mitgebracht</th>
+            <th scope="col">ProID</th>
             <th scope="col">Aktionen</th>
           </tr>
           </thead>
@@ -30,46 +31,48 @@
               </ul>
             </td>
             <td>{{ updateProduct(product.bringersList) }}</td>
+            <td>{{ product.productId }}</td>
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
-                      data-bs-target="#itemsBroughtModal">Mitbringen</button>
+                      data-bs-target="#itemsBroughtModal"
+                      :data-bs-productId="product.productId"
+                      :data-bs-productName="product.productName"
+                      :data-bs-productNeeded="product.needed">Mitbringen</button>
               <button type="button" class="btn btn-danger"
                       @click = "deleteProduct(fullBringList.productsBroughtList, product, index);"
               >✘</button>
             </td>
-              <div class="modal fade" id="itemsBroughtModal" tabindex="-1"
-                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                      Wie viele {{product.productName}} möchtest du mitbringen?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close">
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
-                      <input type="range" class="form-range" min="1"
-                             :max="product.needed" step="1" id="rangeQuantityBrought"
-                             @change="updateQuantityBrought()"
-                             v-model="quantityBrought">
-                      <input type="text" id="inputquantitybrought"  >
-                    </label>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">Schließen</button>
-                    <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
-                            @click="createItemsbrought(product.productId);">
-                            Speichern</button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </tr>
           </tbody>
         </table>
+        <div class="modal fade" id="itemsBroughtModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Header</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+              </div>
+              <div class="modal-body">
+                <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
+                  <input type="range" class="form-range" min="1"
+                         :max="1" step="1" id="rangeQuantityBrought"
+                         @change="updateQuantityBrought()"
+                         v-model="quantityBrought">
+                  <div id="inputquantitybrought">1</div>
+                </label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Schließen</button>
+                <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
+                        id="submitButtonCreateItemsBrought">
+                  Speichern</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -106,7 +109,7 @@ export default {
     },
     updateQuantityBrought() {
       const rangeItemsBrought = document.getElementById('rangeQuantityBrought').value;
-      document.getElementById('inputquantitybrought').value = rangeItemsBrought;
+      document.getElementById('inputquantitybrought').textContent = rangeItemsBrought;
     },
     updateListAfterDelete(products, index) {
       if (index > -1) {
@@ -114,7 +117,7 @@ export default {
       }
     },
     updateProduct() {
-      return 'Hello';
+      return 'Hello1';
       // let qbTotal = null;
       // // itemsBrought.forEach(item => qbTotal += item.itemsBrought);
       // for (let i = 0; i < itemsBrought.length; i += 1) {
@@ -164,6 +167,8 @@ export default {
         redirect: 'follow',
       };
 
+      console.log(requestOptions);
+
       fetch(endpoint, requestOptions)
         .catch((error) => console.log('error', error));
     },
@@ -182,6 +187,24 @@ export default {
     },
   },
   mounted() {
+    const itemsBroughtModal = document.getElementById('itemsBroughtModal');
+    itemsBroughtModal.addEventListener('show.bs.modal', (event) => {
+      const button = event.relatedTarget;
+      const productId = button.getAttribute('data-bs-productId');
+      const productName = button.getAttribute('data-bs-productName');
+      const productNeeded = button.getAttribute('data-bs-productNeeded');
+
+      const modalTitle = itemsBroughtModal.querySelector('.modal-title');
+      modalTitle.textContent = `Wie viele ${productName} möchtest du mitbringen?`;
+
+      const modalQuantitySlider = document.getElementById('rangeQuantityBrought');
+      modalQuantitySlider.max = productNeeded;
+
+      const modalSubmitButton = document.getElementById('submitButtonCreateItemsBrought');
+      modalSubmitButton.onclick = () => {
+        this.createItemsbrought(productId);
+      };
+    });
   },
 };
 </script>

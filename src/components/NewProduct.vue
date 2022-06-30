@@ -24,7 +24,7 @@
           <label for="customRange3" class="form-label">Wie oft soll das Produkt mitgebracht werden?
           <input type="range" class="form-range" min="1" max="50" step="1" id="customRange3"
                  @change="updateTextInput()"  v-model="quantity">
-            <input type="text" id="textInput" >
+            <div id="textInput">1</div>
           </label>
         </div>
         <div class="modal-footer">
@@ -60,7 +60,7 @@ export default {
     },
     updateTextInput() {
       const range = document.getElementById('customRange3').value;
-      document.getElementById('textInput').value = range;
+      document.getElementById('textInput').textContent = range;
     },
     createProduct() {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;

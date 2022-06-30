@@ -15,7 +15,7 @@
 
       <br>
 
-      <button @click="createBringlist" class="btn btn-outline-dark">List erstellen</button>
+      <button @click="createBringlist" class="btn btn-outline-dark">Liste erstellen</button>
 <!--      <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"-->
 <!--        @click="createBringlist, insertUrl(bringlistId)"-->
 <!--         id="weiterleiten">Liste erstellen</a>-->
@@ -81,6 +81,18 @@ export default {
 
 <style scoped>
 button {
-  background-color:#4a62b9;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #000000 ;
+}
+
+button:hover {
+  background-color: transparent;
+  color: #000000;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #000000 ;
 }
 </style>
