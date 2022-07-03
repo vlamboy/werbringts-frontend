@@ -1,11 +1,8 @@
-<template>
-  <!-- <ProductList :key="componentKey" /> -->
-  <!--<my-component v-if="renderComponent" />-->
+<template :key="componentKey">
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <!-- <product-list :key="componentKey"/>-->
-        <table class="table table-bordered">
+        <table class="table table-bordered" ref="table">
           <thead>
           <tr>
             <th scope="col">Produkt Nummer</th>
@@ -15,6 +12,7 @@
             <th scope="col">Wird Mitgebracht</th>
             <th scope="col">ProID</th>
             <th scope="col">Aktionen</th>
+            <th scope="col"> </th>
           </tr>
           </thead>
           <tbody>
@@ -26,21 +24,27 @@
             <td>
               <ul>
                 <li v-for="person in product.bringersList" :key="person">
-                  {{ person.personName}} bringt {{ person.amount}} mit.
+                  {{ person.personName }} bringt {{ person.amount}} mit.
                 </li>
               </ul>
             </td>
             <td>{{ updateProduct(product.bringersList) }}</td>
             <td>{{ product.productId }}</td>
+<!--           modal: https://getbootstrap.com/docs/5.2/components/modal/#varying-modal-content-->
             <td>
               <button class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal"
                       :data-bs-productId="product.productId"
                       :data-bs-productName="product.productName"
-                      :data-bs-productNeeded="product.needed">Mitbringen</button>
+                      :data-bs-productNeeded="product.needed"
+                      :data-bs-personId=46>
+                      Mitbringen</button>
               <button type="button" class="btn btn-danger"
                       @click = "deleteProduct(fullBringList.productsBroughtList, product, index);"
               >✘</button>
+            </td>
+            <td>
+
             </td>
           </tr>
           </tbody>
@@ -93,8 +97,10 @@ export default {
       itemsBroughtPerProduct: [],
       quantityBrought: null,
       productsBrought: '',
+      componentKey: 0,
     };
   },
+  emits: ['ibcreated'],
   props: {
     fullBringList: {
       type: Object,
@@ -102,6 +108,11 @@ export default {
     },
   },
   methods: {
+    forceRerender() {
+      this.componentKey += 1;
+      console.log('Method Rerender');
+      this.$forceUpdate();
+    },
     getQuantity() {
       const itemQuantity = document.getElementById('customRange3').value;
       // const itemQuantity = products.quantity;
@@ -146,16 +157,15 @@ export default {
       if (index > -1) {
         array.splice(index, 1);
       }
-      // Produkt aus dem array löschen by id
     },
-    createItemsbrought(id) {
+    createItemsbrought(pid, id) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought`;
       console.log(endpoint);
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
 
       const payload = JSON.stringify({
-        personId: 4,
+        personId: pid,
         productId: id,
         quantityBrought: this.quantityBrought,
       });
@@ -168,21 +178,42 @@ export default {
       };
 
       console.log(requestOptions);
+      console.log(this.componentKey);
+      this.$forceUpdate();
+      this.forceRerender();
+      console.log(this.componentKey);
 
       fetch(endpoint, requestOptions)
+      // .then(() => this.forceRerender())
+        .then(() => this.$emit('ibcreated'))
+        .then(() => console.log('render'))
         .catch((error) => console.log('error', error));
     },
-    getItemsBroughtForProduct(productid) {
-      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought?productId=${productid}`;
+    getItemsBrought(id) {
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought?id=${id}`;
       const requestOptions = {
         method: 'GET',
         redirect: 'follow',
       };
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
-        .then((result) => result.forEach((itemsBrought) => {
-          this.itemsBrought.push(itemsBrought);
-        }))
+        // .then((result) => {
+        //   console.log(result);
+        //   this.fullBringList = result;
+        // })
+        .catch((error) => console.log('error', error));
+    },
+    getFullBringlist() {
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/fullbringlist`;
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+      fetch(endpoint, requestOptions)
+        .then((response) => response.json())
+        // .then((result) => result.forEach((itemsBrought) => {
+        //   this.itemsBrought.push(itemsBrought);
+        // }))
         .catch((error) => console.log('error', error));
     },
   },
@@ -193,7 +224,8 @@ export default {
       const productId = button.getAttribute('data-bs-productId');
       const productName = button.getAttribute('data-bs-productName');
       const productNeeded = button.getAttribute('data-bs-productNeeded');
-
+      const pid = button.getAttribute('data-bs-personId');
+      // const pid = 46;
       const modalTitle = itemsBroughtModal.querySelector('.modal-title');
       modalTitle.textContent = `Wie viele ${productName} möchtest du mitbringen?`;
 
@@ -202,7 +234,11 @@ export default {
 
       const modalSubmitButton = document.getElementById('submitButtonCreateItemsBrought');
       modalSubmitButton.onclick = () => {
-        this.createItemsbrought(productId);
+        console.log('Create itemsBrought Button clicked');
+        this.createItemsbrought(pid, productId);
+        console.log(pid);
+        console.log(pid);
+        this.getItemsBrought(productId);
       };
     });
   },

@@ -14,7 +14,7 @@
     <br>
     <br>
     <new-product @created="loadProducts"></new-product>
-    <product-list :fullBringList="this.fullBringList"></product-list>
+    <product-list @ibcreated="loadProducts" :fullBringList="this.fullBringList"></product-list>
   </div>
 </template>
 

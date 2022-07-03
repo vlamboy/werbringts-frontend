@@ -57,6 +57,7 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
+        .then(() => this.$emit('created'))
         .catch((error) => console.log('error', error));
     },
   },
