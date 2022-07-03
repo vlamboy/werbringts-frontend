@@ -99,13 +99,13 @@ export default {
 </script>
 
 <style scoped>
-/* Style buttons */
+
 .btn {
-  background-color: #4a62b9;; /* Blue background */
-  color: white; /* White text */
-  padding: 8px 108px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
+  background-color: #4a62b9;
+  color: white;
+  padding: 8px 108px;
+  font-size: 16px;
+  cursor: pointer;
   border-color: white ;
 }
 

@@ -1,11 +1,5 @@
 <template>
-   <!-- Button trigger modal -->
- <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-          data-bs-target="#productModal">
-    Füge ein neues Produkt hinzu
-  </button>
--->
-  <!-- Modal -->
+
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel"
        aria-hidden="true">
     <div class="modal-dialog">
@@ -49,7 +43,6 @@ export default {
       quantity: 1,
       times: 0,
       product_reload: 0,
-      // key: 'componentKey',
     };
   },
   emits: ['created'],
@@ -88,7 +81,6 @@ export default {
         .catch((error) => console.log('error', error));
     },
   },
-  // props: ['settings'],
 };
 
 </script>
