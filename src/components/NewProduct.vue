@@ -45,7 +45,7 @@ export default {
       product_reload: 0,
     };
   },
-  emits: ['created'],
+  emits: ['productCreated'],
   methods: {
     reload() {
       this.product_reload += 1;
@@ -77,7 +77,7 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
-        .then(() => this.$emit('created'))
+        .then(() => this.$emit('productCreated'))
         .catch((error) => console.log('error', error));
     },
   },
