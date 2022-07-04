@@ -16,9 +16,6 @@
       <br>
 
       <button @click="createBringlist" class="btn btn-outline-dark">Liste erstellen</button>
-<!--      <a href="/new-bringlist/" button class="btn btn-outline-dark" type="submit"-->
-<!--        @click="createBringlist, insertUrl(bringlistId)"-->
-<!--         id="weiterleiten">Liste erstellen</a>-->
   </div>
 
   <br>
@@ -73,7 +70,6 @@ export default {
           this.$router.push(`/new-bringlist/${bringlistId}`);
         })
         .catch((error) => console.log('error asd', error));
-      // .catch((error) => console.log('error', error));
     },
   },
 };
