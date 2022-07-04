@@ -10,9 +10,7 @@
             <th scope="col">Anzahl</th>
             <th scope="col">Mitbringende</th>
             <th scope="col">Wird Mitgebracht</th>
-            <th scope="col">ProID</th>
             <th scope="col">Aktionen</th>
-            <th scope="col"> </th>
           </tr>
           </thead>
           <tbody>
@@ -28,23 +26,20 @@
                 </li>
               </ul>
             </td>
-            <td>{{ updateProduct(product.bringersList) }}</td>
-            <td>{{ product.productId }}</td>
-<!--           modal: https://getbootstrap.com/docs/5.2/components/modal/#varying-modal-content-->
+            <td>{{ getProductStatus(product) }}</td>
+            <!--modal: https://getbootstrap.com/docs/5.2/components/modal/#varying-modal-content-->
             <td>
-              <button class="btn btn-primary" data-bs-toggle="modal"
+              <button class="btn btn-primary"
+                      data-bs-toggle="modal"
                       data-bs-target="#itemsBroughtModal"
                       :data-bs-productId="product.productId"
                       :data-bs-productName="product.productName"
                       :data-bs-productNeeded="product.needed"
-                      :data-bs-personId=46>
+                      :disabled="getAllBrought(product)">
                       Mitbringen</button>
               <button type="button" class="btn btn-danger"
                       @click = "deleteProduct(fullBringList.productsBroughtList, product, index);"
               >✘</button>
-            </td>
-            <td>
-
             </td>
           </tr>
           </tbody>
@@ -59,15 +54,18 @@
                 </button>
               </div>
               <div class="modal-body">
-                <label for="rangeQuantityBrought" class="form-label">Gib die Anzahl hier ein
+                <label for="rangeQuantityBrought" class="form-label"
+                       v-if="personId">Gib die Anzahl hier ein
                   <input type="range" class="form-range" min="1"
                          :max="1" step="1" id="rangeQuantityBrought"
                          @change="updateQuantityBrought()"
-                         v-model="quantityBrought">
-                  <div id="inputquantitybrought">1</div>
+                         v-model="quantityBrought"
+                         v-if="personId">
                 </label>
+                <div id="inputquantitybrought" v-if="personId">1</div>
+                <div v-else>Bitte verrate uns deinen Namen.</div>
               </div>
-              <div class="modal-footer">
+              <div class="modal-footer" v-if="personId">
                 <button type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">Schließen</button>
                 <button class="btn btn-primary" type="submit" data-bs-dismiss="modal"
@@ -100,24 +98,15 @@ export default {
       componentKey: 0,
     };
   },
-  emits: ['ibcreated'],
+  emits: ['itemsBroughtCreated'],
   props: {
     fullBringList: {
       type: Object,
       required: true,
     },
+    personId: null,
   },
   methods: {
-    forceRerender() {
-      this.componentKey += 1;
-      console.log('Method Rerender');
-      this.$forceUpdate();
-    },
-    getQuantity() {
-      const itemQuantity = document.getElementById('customRange3').value;
-      // const itemQuantity = products.quantity;
-      document.getElementById('rangeQuantityBrought').max = itemQuantity;
-    },
     updateQuantityBrought() {
       const rangeItemsBrought = document.getElementById('rangeQuantityBrought').value;
       document.getElementById('inputquantitybrought').textContent = rangeItemsBrought;
@@ -127,46 +116,41 @@ export default {
         products.splice(index, 1);
       }
     },
-    updateProduct() {
-      return 'Hello1';
-      // let qbTotal = null;
-      // // itemsBrought.forEach(item => qbTotal += item.itemsBrought);
-      // for (let i = 0; i < itemsBrought.length; i += 1) {
-      //   qbTotal += itemsBrought.quantityBrought;
-      // }
-      // if (product.quantity <= qbTotal) {
-      //   return 'Wird noch gebraucht';
-      // } return 'Wird mitgebracht';
-      // // setz "wird mitgebracht auf true"
-      // // mitbringen Button deaktivieren
+    getAllBrought(product) {
+      let personAmount = 0;
+      product.bringersList?.forEach((item) => {
+        personAmount += item.amount;
+      });
+      return product.needed <= personAmount;
     },
-    // updateProductwithItemsBrought(productId, itemsBrought) {
-    //   itemsBroughtPerProduct.quantityBrought.reduce((accumulator, currentValue) => {
-    //      return accumulator + currentValue;
-    //    });
-    // },
+    getProductStatus(product) {
+      if (this.getAllBrought(product)) {
+        return '✔';
+      }
+      return '✘';
+    },
     deleteProduct(array, product, index) {
-      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products`;
+      const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/products/${product.productId}`;
       const requestOptions = {
         method: 'DELETE',
         redirect: 'follow',
       };
-      fetch(`${endpoint}/${product.productId}`, requestOptions)
+      fetch(endpoint, requestOptions)
         .catch((error) => console.log('error', error));
 
       if (index > -1) {
         array.splice(index, 1);
       }
     },
-    createItemsbrought(pid, id) {
+    createItemsbrought(productId) {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/itemsBrought`;
       console.log(endpoint);
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
 
       const payload = JSON.stringify({
-        personId: pid,
-        productId: id,
+        personId: this.personId,
+        productId,
         quantityBrought: this.quantityBrought,
       });
 
@@ -179,13 +163,10 @@ export default {
 
       console.log(requestOptions);
       console.log(this.componentKey);
-      this.$forceUpdate();
-      this.forceRerender();
       console.log(this.componentKey);
 
       fetch(endpoint, requestOptions)
-      // .then(() => this.forceRerender())
-        .then(() => this.$emit('ibcreated'))
+        .then(() => this.$emit('itemsBroughtCreated'))
         .then(() => console.log('render'))
         .catch((error) => console.log('error', error));
     },
@@ -197,10 +178,6 @@ export default {
       };
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
-        // .then((result) => {
-        //   console.log(result);
-        //   this.fullBringList = result;
-        // })
         .catch((error) => console.log('error', error));
     },
     getFullBringlist() {
@@ -211,35 +188,41 @@ export default {
       };
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
-        // .then((result) => result.forEach((itemsBrought) => {
-        //   this.itemsBrought.push(itemsBrought);
-        // }))
         .catch((error) => console.log('error', error));
     },
   },
   mounted() {
     const itemsBroughtModal = document.getElementById('itemsBroughtModal');
     itemsBroughtModal.addEventListener('show.bs.modal', (event) => {
-      const button = event.relatedTarget;
-      const productId = button.getAttribute('data-bs-productId');
-      const productName = button.getAttribute('data-bs-productName');
-      const productNeeded = button.getAttribute('data-bs-productNeeded');
-      const pid = button.getAttribute('data-bs-personId');
-      // const pid = 46;
       const modalTitle = itemsBroughtModal.querySelector('.modal-title');
-      modalTitle.textContent = `Wie viele ${productName} möchtest du mitbringen?`;
+      if (this.personId == null) {
+        modalTitle.textContent = 'Anonym unterwegs?';
+      } else {
+        const button = event.relatedTarget;
+        const productId = button.getAttribute('data-bs-productId');
+        const productName = button.getAttribute('data-bs-productName');
+        const productNeeded = button.getAttribute('data-bs-productNeeded');
 
-      const modalQuantitySlider = document.getElementById('rangeQuantityBrought');
-      modalQuantitySlider.max = productNeeded;
+        modalTitle.textContent = `Wie viele ${productName} möchtest du mitbringen?`;
 
-      const modalSubmitButton = document.getElementById('submitButtonCreateItemsBrought');
-      modalSubmitButton.onclick = () => {
-        console.log('Create itemsBrought Button clicked');
-        this.createItemsbrought(pid, productId);
-        console.log(pid);
-        console.log(pid);
-        this.getItemsBrought(productId);
-      };
+        const filteredProducts = this.fullBringList.productsBroughtList
+          .filter((product) => product.productId === Number(productId));
+        const productAmounts = filteredProducts[0].bringersList.map((product) => product.amount);
+        const personAmount = productAmounts.reduce(
+          (amount1, amount2) => amount1 + amount2,
+          0,
+        );
+
+        const modalQuantitySlider = document.getElementById('rangeQuantityBrought');
+        modalQuantitySlider.max = productNeeded - personAmount;
+
+        const modalSubmitButton = document.getElementById('submitButtonCreateItemsBrought');
+        modalSubmitButton.onclick = () => {
+          console.log('Create itemsBrought Button clicked');
+          this.createItemsbrought(productId);
+          this.getItemsBrought(productId);
+        };
+      }
     });
   },
 };
@@ -256,6 +239,12 @@ button1 {
   background-color:white;
   border: 2px solid #156e75;
   color: #156e75;
+}
+
+button:disabled {
+  background-color: #5B9A9E;
+  border: none;
+  color: #ffffff;
 }
 
 button:hover {
