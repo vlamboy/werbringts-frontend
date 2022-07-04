@@ -2,7 +2,7 @@
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary" data-bs-toggle="modal"
           data-bs-target="#exampleModal">
-    Sag Deinen Gästen wer Du bist!
+    Verrate uns deinen Namen!
   </button>
 
   <!-- Modal -->
@@ -36,8 +36,10 @@ export default {
   data() {
     return {
       personName: '',
+      personId: null,
     };
   },
+  emits: ['personCreated'],
   methods: {
     createPerson() {
       const endpoint = `${process.env.VUE_APP_BACKEND_BASE_URL}/api/v1/persons`;
@@ -57,7 +59,13 @@ export default {
       };
 
       fetch(endpoint, requestOptions)
-        .then(() => this.$emit('created'))
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          this.personId = result.personId;
+          this.personName = result.personName;
+        })
+        .then(() => this.$emit('personCreated', this.personId, this.personName))
         .catch((error) => console.log('error', error));
     },
   },
