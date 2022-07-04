@@ -10,11 +10,12 @@
     <button-bar></button-bar>
     <br>
     <br>
-    <name-popup></name-popup>
+    <h4 v-if="personId">Hallo {{ personName }}! Was bringst du mit?</h4>
+    <name-popup v-else @person-created="storePersonId"></name-popup>
     <br>
-    <br>
-    <new-product @created="loadProducts"></new-product>
-    <product-list @ibcreated="loadProducts" :fullBringList="this.fullBringList"></product-list>
+    <new-product @product-created="loadProducts"></new-product>
+    <product-list @items-brought-created="loadProducts" :personId="this.personId"
+                  :fullBringList="this.fullBringList"></product-list>
   </div>
 </template>
 
@@ -35,7 +36,9 @@ export default {
   },
   data() {
     return {
-      fullBringList: '',
+      fullBringList: {},
+      personId: null,
+      personName: null,
     };
   },
   methods: {
@@ -54,6 +57,11 @@ export default {
           this.fullBringList = result;
         })
         .catch((error) => console.log('error', error));
+    },
+    storePersonId(personId, personName) {
+      console.log(personId);
+      this.personId = personId;
+      this.personName = personName;
     },
   },
   mounted() {
