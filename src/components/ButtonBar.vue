@@ -7,8 +7,6 @@
     <button href="#" class="btn btn-primary" data-bs-toggle="modal"
       data-bs-target="#linkModal">Liste teilen </button>
     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-       data-bs-target="#ListeLöschenModal">Liste löschen</a>
-    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
        data-bs-target="#NeueListeModal">Neue Liste erstellen</a>
   </div>
   <!-- Modal -->
@@ -42,24 +40,6 @@
         </div>
         <div class="modal-body">
           <button onclick="location.href='/'" class="button">Ja</button>
-          <button type="button" class="button" data-bs-dismiss="modal">Nein</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="ListeLöschenModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=7>Möchtest Du Deine Liste wirklich löschen?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          </button>
-        </div>
-        <div class="modal-body">
-          <button onclick="location.href='/'"
-                  @click="deleteBringlist(this.$route.params.bringlistId)"
-                  class="button">Ja</button>
           <button type="button" class="button" data-bs-dismiss="modal">Nein</button>
         </div>
       </div>
@@ -103,23 +83,21 @@ export default {
 .btn {
   background-color: #4a62b9;
   color: white;
-  padding: 8px 108px;
+  padding: 8px 160px;
   font-size: 16px;
   cursor: pointer;
   border-color: white ;
 }
 
-/* Darker background on mouse-over */
 .btn:hover {
   background-color: #344582;
 }
 .button{
-  background-color: #5B9A9E; /* Blue background */
-  color: white; /* White text */
-  padding: 8px 30px; /* Some padding */
+  background-color: #5B9A9E;
+  color: white;
+  padding: 8px 30px;
   font-size: 16px;
   cursor: pointer;
   border-color: white ;
-  ;
 }
 </style>
